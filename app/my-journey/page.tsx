@@ -9,8 +9,6 @@ import { redirect } from "next/navigation";
 import {
   getUserCompanions,
   getUserSessions,
-  getBookmarkedCompanions,
-  addToSessionHistory,
 } from "@/lib/actions/companion.actions";
 import Image from "next/image";
 import CompanionsList from "@/components/CompanionsList";
@@ -69,11 +67,24 @@ const Profile = async () => {
           </div>
         </div>
       </section>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Is it accessible?</AccordionTrigger>
+      <Accordion type="multiple">
+        <AccordionItem value="recent">
+          <AccordionTrigger className="text-2xl font-bold">
+            Recent Sessions
+          </AccordionTrigger>
           <AccordionContent>
-            Yes. It adheres to the WAI-ARIA design pattern.
+            <CompanionsList
+              title="Recent Sessions"
+              companions={sessionHistory}
+            />
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="companions">
+          <AccordionTrigger className="text-2xl font-bold">
+            My Companions {`(${companions.length})`}
+          </AccordionTrigger>
+          <AccordionContent>
+            <CompanionsList title="My Companions" companions={companions} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
